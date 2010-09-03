@@ -48,6 +48,7 @@ object CamelKernel { kernel =>
             exchange.getIn.setBody( Integer.valueOf(exchange.getIn.getBody(classOf[String])) )
           }
       }).log("Parsed job #${in.header.camel.beanstalk.jobId} to body ${in.body}")
+
       from("timer:dig?period=30seconds").setBody(constant(10)).log("Kick ${in.body} buried/delayed tasks").to("beanstalk:testTube?command=kick")
     }
   }
