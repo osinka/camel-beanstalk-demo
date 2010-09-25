@@ -42,12 +42,13 @@ object CamelKernel { kernel =>
 
   object routeBuilder extends RouteBuilder {
     override def configure {
-      from("beanstalk:testTube").log("Processing job #${in.header.beanstalk.jobId} with body ${in.body}").process(new Processor() {
+      from("beanstalk:testTube").log("Processing job ${property.beanstalk.jobId} with body ${in.body}").
+      process(new Processor() {
           override def process(exchange: Exchange) {
             // try to make integer value out of body
             exchange.getIn.setBody( Integer.valueOf(exchange.getIn.getBody(classOf[String])) )
           }
-      }).log("Parsed job #${in.header.camel.beanstalk.jobId} to body ${in.body}")
+      }).log("Parsed job ${property.beanstalk.jobId} to body ${in.body}")
 
       from("timer:dig?period=30seconds").setBody(constant(10)).log("Kick ${in.body} buried/delayed tasks").to("beanstalk:testTube?command=kick")
     }
