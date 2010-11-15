@@ -42,15 +42,28 @@ object CamelKernel { kernel =>
 
   object routeBuilder extends RouteBuilder {
     override def configure {
-      from("beanstalk:testTube").log("Processing job ${property.beanstalk.jobId} with body ${in.body}").
-      process(new Processor() {
-          override def process(exchange: Exchange) {
-            // try to make integer value out of body
-            exchange.getIn.setBody( Integer.valueOf(exchange.getIn.getBody(classOf[String])) )
-          }
-      }).log("Parsed job ${property.beanstalk.jobId} to body ${in.body}")
+      from("beanstalk:testTube").
+        threads(10).
+        to("direct:process")
 
-      from("timer:dig?period=30seconds").setBody(constant(10)).log("Kick ${in.body} buried/delayed tasks").to("beanstalk:testTube?command=kick")
+      from("direct:process").
+        log("Processing job ${property.beanstalk.jobId} with body ${in.body}").
+        process(new Processor() {
+            override def process(exchange: Exchange) {
+              val in = exchange.getIn
+
+              // try to make integer value out of body
+              val i = Integer valueOf in.getBody(classOf[String])
+              Thread sleep i.intValue
+              in setBody i
+            }
+        }).
+        log("Parsed job ${property.beanstalk.jobId} to body ${in.body}")
+
+      from("timer:dig?period=30seconds").
+        setBody(constant(10)).
+        log("Kick ${in.body} buried/delayed tasks").
+        to("beanstalk:testTube?command=kick")
     }
   }
 }
