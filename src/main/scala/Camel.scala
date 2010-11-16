@@ -43,7 +43,7 @@ object CamelKernel { kernel =>
   object routeBuilder extends RouteBuilder {
     override def configure {
       from("beanstalk:testTube").
-        threads(10).
+//        threads(10).
         to("direct:process")
 
       from("direct:process").
@@ -54,7 +54,7 @@ object CamelKernel { kernel =>
 
               // try to make integer value out of body
               val i = Integer valueOf in.getBody(classOf[String])
-              Thread sleep i.intValue
+//              Thread sleep i.intValue
               in setBody i
             }
         }).
