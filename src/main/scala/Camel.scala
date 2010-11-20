@@ -43,18 +43,18 @@ object CamelKernel { kernel =>
   object routeBuilder extends RouteBuilder {
     override def configure {
       from("beanstalk:testTube").
-//        threads(10).
-        to("direct:process")
+	wireTap("direct:process")
 
       from("direct:process").
         log("Processing job ${property.beanstalk.jobId} with body ${in.body}").
+        threads(10).
         process(new Processor() {
             override def process(exchange: Exchange) {
               val in = exchange.getIn
 
               // try to make integer value out of body
               val i = Integer valueOf in.getBody(classOf[String])
-//              Thread sleep i.intValue
+              Thread sleep 1000
               in setBody i
             }
         }).

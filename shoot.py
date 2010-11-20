@@ -18,7 +18,7 @@ def main():
     conn.use(options.tube)
 
     for i in range(int(options.n)):
-        conn.put(options.i) 
+        conn.put(str(i))
 
 if __name__ == '__main__':
     main()
