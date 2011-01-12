@@ -43,7 +43,7 @@ object CamelKernel { kernel =>
   object routeBuilder extends RouteBuilder {
     override def configure {
       from("beanstalk:testTube").
-	wireTap("direct:process")
+	      wireTap("direct:process")
 
       from("direct:process").
         log("Processing job ${property.beanstalk.jobId} with body ${in.body}").
