@@ -2,12 +2,22 @@ package com.osinka.beanstalk.camel.demo
 
 object Main {
   def main(args: Array[String]) {
-    CamelKernel.boot
-    CamelKernel.run
+    val eval = new com.twitter.util.Eval
+
+    val config = eval.apply[Config](classOf[CamelKernel].getClassLoader getResourceAsStream "Config.scala")
+    val kernel = new CamelKernel(config)
+
+    kernel.boot
+    kernel.run
   }
 }
 
-object CamelKernel { kernel =>
+trait Config {
+  def sleep: Int
+  def threads: Int
+}
+
+class CamelKernel(val config: Config) { kernel =>
   import java.util.concurrent.CountDownLatch
   import org.apache.camel.impl.DefaultCamelContext
   import org.apache.camel.{Processor, Exchange}
@@ -43,18 +53,18 @@ object CamelKernel { kernel =>
   object routeBuilder extends RouteBuilder {
     override def configure {
       from("beanstalk:testTube").
-	      wireTap("direct:process")
+	wireTap("direct:process")
 
       from("direct:process").
         log("Processing job ${property.beanstalk.jobId} with body ${in.body}").
-        threads(10).
+        threads(config.threads).
         process(new Processor() {
             override def process(exchange: Exchange) {
               val in = exchange.getIn
 
               // try to make integer value out of body
               val i = Integer valueOf in.getBody(classOf[String])
-              Thread sleep 1000
+              Thread sleep config.sleep
               in setBody i
             }
         }).
