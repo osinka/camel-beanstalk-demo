@@ -1,6 +1,6 @@
-import com.github.retronym.SbtOneJar
 import sbt._
 import sbt.Keys._
+import com.typesafe.sbt.SbtStartScript
 
 object MiddleBuild extends Build {
 
@@ -35,13 +35,13 @@ object MiddleBuild extends Build {
     "org.apache.camel"    % "camel-core"              % Camel,
     "com.osinka.camel"    % "camel-beanstalk"         % "1.5.2-SNAPSHOT" changing,
     "com.twitter"         % "util-eval"               % TwitterUtil,
-    "org.slf4j"           % "slf4j-simple"            % Slf4j % "test"
+    "org.slf4j"           % "slf4j-simple"            % Slf4j
   )
 
   lazy val root = Project(
     id = "beanstalk-camel-demo",
     base = file("."),
-    settings = defaultSettings ++ SbtOneJar.oneJarSettings ++ Seq(
+    settings = defaultSettings ++ SbtStartScript.startScriptForClassesSettings ++ Seq(
       mainClass in run in Compile := Some("com.osinka.beanstalk.camel.demo.Main"),
       libraryDependencies ++= libDependencies
     )

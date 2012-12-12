@@ -7,5 +7,4 @@ resolvers += Resolver.url(
 
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.1.0")
 
-// https://github.com/sbt/sbt-onejar
-addSbtPlugin("com.github.retronym" % "sbt-onejar" % "0.8")
+addSbtPlugin("com.typesafe.sbt" % "sbt-start-script" % "0.6.0")
