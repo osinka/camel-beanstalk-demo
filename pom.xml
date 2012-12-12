@@ -15,7 +15,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <scala.version>2.9.1</scala.version>
+    <scala.version>2.9.2</scala.version>
     <jdk.version>1.6</jdk.version>
     <java.src.version>1.5</java.src.version>
   </properties>
@@ -29,12 +29,12 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-core</artifactId>
-      <version>2.9.1</version>
+      <version>2.10.2</version>
     </dependency>
     <dependency>
       <groupId>com.twitter</groupId>
-      <artifactId>util-eval_${scala.version}</artifactId>
-      <version>2.0.0</version>
+      <artifactId>util-eval</artifactId>
+      <version>5.3.13</version>
     </dependency>
     <dependency>
       <groupId>com.osinka.camel</groupId>
@@ -44,7 +44,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.6.4</version>
+      <version>1.7.2</version>
     </dependency>
   </dependencies>
 
@@ -94,9 +94,9 @@
 
   <repositories>
     <repository>
-      <id>twitter</id>
-      <name>Twitter Maven2 Repository</name>
-      <url>http://maven.twttr.com</url>
+      <id>typesafe-twitter</id>
+      <name>Typesafe Twitter</name>
+      <url>http://repo.typesafe.com/typesafe/simple/twitter/</url>
     </repository>
   </repositories>
 
