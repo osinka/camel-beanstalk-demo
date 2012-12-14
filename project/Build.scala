@@ -42,7 +42,7 @@ object CamelDemoBuild extends Build {
     id = "beanstalk-camel-demo",
     base = file("."),
     settings = defaultSettings ++ SbtStartScript.startScriptForClassesSettings ++ Seq(
-      mainClass in run in Compile := Some("com.osinka.beanstalk.camel.demo.Main"),
+      mainClass in Compile := Some("com.osinka.beanstalk.camel.demo.Main"),
       libraryDependencies ++= libDependencies
     )
   )
