@@ -2,7 +2,7 @@ import sbt._
 import sbt.Keys._
 import com.typesafe.sbt.SbtStartScript
 
-object MiddleBuild extends Build {
+object CamelDemoBuild extends Build {
 
   lazy val buildSettings = Seq(
     organization := "com.osinka.camel",
