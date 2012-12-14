@@ -33,7 +33,7 @@ object MiddleBuild extends Build {
 
   lazy val libDependencies = Seq(
     "org.apache.camel"    % "camel-core"              % Camel,
-    "com.osinka.camel"    % "camel-beanstalk"         % "1.5.2-SNAPSHOT" changing,
+    "com.osinka.camel"    % "camel-beanstalk"         % "1.5.1",
     "com.twitter"         % "util-eval"               % TwitterUtil,
     "org.slf4j"           % "slf4j-simple"            % Slf4j
   )
