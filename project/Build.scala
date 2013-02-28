@@ -14,17 +14,8 @@ object CamelDemoBuild extends Build {
 
   lazy val defaultSettings = Project.defaultSettings ++ Seq(
     resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/",
-    resolvers += "Twitter Public Repo" at "http://maven.twttr.com/",
-    resolvers += "Sonatype Repo" at "https://oss.sonatype.org/content/groups/public",
-    resolvers += "Local Maven Repository" at ("file://" + Path.userHome.absolutePath + "/.m2/repository"),
-
-    // compile options
     scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked"),
-
-    // show full stack traces
-    testOptions in Test += Tests.Argument("-oF"),
-    // for packaging in jar
-    exportJars := true
+    testOptions in Test += Tests.Argument("-oF")
   )
 
   val Camel             = "2.10.3"
@@ -33,8 +24,9 @@ object CamelDemoBuild extends Build {
 
   lazy val libDependencies = Seq(
     "org.apache.camel"    % "camel-core"              % Camel,
-    "com.osinka.camel"    % "camel-beanstalk"         % "1.5.1",
-    "com.twitter"         % "util-eval"               % TwitterUtil,
+    "org.apache.camel"    % "camel-spring"            % Camel,
+    "com.osinka.camel"    % "camel-beanstalk"         % "1.6.0",
+    "com.typesafe"        % "config"                  % "1.0.0",
     "org.slf4j"           % "slf4j-simple"            % Slf4j
   )
 
@@ -42,7 +34,7 @@ object CamelDemoBuild extends Build {
     id = "beanstalk-camel-demo",
     base = file("."),
     settings = defaultSettings ++ SbtStartScript.startScriptForClassesSettings ++ Seq(
-      mainClass in Compile := Some("com.osinka.beanstalk.camel.demo.Main"),
+      mainClass in Compile := Some("org.apache.camel.spring.Main"),
       libraryDependencies ++= libDependencies
     )
   )

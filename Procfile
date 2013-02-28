@@ -1,1 +1,1 @@
-worker: target/start
+worker: target/start -ac routes.xml
