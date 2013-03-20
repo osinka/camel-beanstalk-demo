@@ -19,8 +19,8 @@ object CamelDemoBuild extends Build {
   )
 
   val Camel             = "2.10.3"
-  val TwitterUtil       = "6.0.1"
-  val Slf4j             = "1.7.2"
+  val TwitterUtil       = "6.2.3"
+  val Slf4j             = "1.7.4"
 
   lazy val libDependencies = Seq(
     "org.apache.camel"    % "camel-core"              % Camel,
