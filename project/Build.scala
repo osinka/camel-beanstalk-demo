@@ -18,14 +18,14 @@ object CamelDemoBuild extends Build {
     testOptions in Test += Tests.Argument("-oF")
   )
 
-  val Camel             = "2.10.3"
+  val Camel             = "2.11.0"
   val TwitterUtil       = "6.2.3"
   val Slf4j             = "1.7.4"
 
   lazy val libDependencies = Seq(
     "org.apache.camel"    % "camel-core"              % Camel,
     "org.apache.camel"    % "camel-spring"            % Camel,
-    "com.osinka.camel"    % "camel-beanstalk"         % "1.6.0",
+    "com.osinka.camel"    % "camel-beanstalk"         % "1.7.0",
     "com.typesafe"        % "config"                  % "1.0.0",
     "org.slf4j"           % "slf4j-simple"            % Slf4j
   )
