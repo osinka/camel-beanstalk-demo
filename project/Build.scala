@@ -7,7 +7,7 @@ object CamelDemoBuild extends Build {
   lazy val buildSettings = Seq(
     organization := "com.osinka.camel",
     version      := "1.5.0-SNAPSHOT",
-    scalaVersion := "2.9.1"
+    scalaVersion := "2.10.1"
   )
 
   override lazy val settings = super.settings ++ buildSettings
@@ -19,7 +19,6 @@ object CamelDemoBuild extends Build {
   )
 
   val Camel             = "2.11.0"
-  val TwitterUtil       = "6.2.3"
   val Slf4j             = "1.7.4"
 
   lazy val libDependencies = Seq(
