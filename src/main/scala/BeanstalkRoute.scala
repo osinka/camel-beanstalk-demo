@@ -1,5 +1,6 @@
 package demo
 
+import java.util.concurrent.TimeUnit
 import org.apache.camel.builder.RouteBuilder
 import org.apache.camel.{LoggingLevel, Exchange, Processor}
 import com.typesafe.config.ConfigFactory
@@ -28,14 +29,14 @@ class BeanstalkRoute extends RouteBuilder {
       .process(TestProcessor)
       .log("Parsed job ${property.beanstalk.jobId} to body ${in.body}")
 
-    from("timer:dig?period=%sseconds" format config.getMilliseconds("diggerPeriod")/1000)
+    from("timer:dig?period=%sseconds" format config.getDuration("diggerPeriod", TimeUnit.SECONDS))
       .setBody(constant(config.getInt("digBatchSize")))
       .log("Kick ${in.body} buried/delayed tasks")
       .to("beanstalk:%s?command=kick" format tube)
   }
 
   object TestProcessor extends Processor {
-    lazy val sleepMs = config.getMilliseconds("sleep")
+    lazy val sleepMs = config.getDuration("sleep", TimeUnit.MILLISECONDS)
 
     override def process(exchange: Exchange) {
       val in = exchange.getIn

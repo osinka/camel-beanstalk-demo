@@ -1,13 +1,13 @@
 import sbt._
 import sbt.Keys._
-import com.typesafe.sbt.SbtStartScript
+import com.typesafe.sbt.SbtNativePackager._
 
 object CamelDemoBuild extends Build {
 
   lazy val buildSettings = Seq(
     organization := "com.osinka.camel",
     version      := "1.5.0-SNAPSHOT",
-    scalaVersion := "2.10.2"
+    scalaVersion := "2.10.3"
   )
 
   override lazy val settings = super.settings ++ buildSettings
@@ -18,21 +18,21 @@ object CamelDemoBuild extends Build {
     testOptions in Test += Tests.Argument("-oF")
   )
 
-  val Camel             = "2.11.0"
+  val Camel             = "2.12.3"
   val Slf4j             = "1.7.5"
 
   lazy val libDependencies = Seq(
     "org.apache.camel"    % "camel-core"              % Camel,
     "org.apache.camel"    % "camel-spring"            % Camel,
     "com.osinka.camel"    % "camel-beanstalk"         % "1.7.0",
-    "com.typesafe"        % "config"                  % "1.0.1",
+    "com.typesafe"        % "config"                  % "1.2.0",
     "org.slf4j"           % "slf4j-simple"            % Slf4j
   )
 
   lazy val root = Project(
     id = "beanstalk-camel-demo",
     base = file("."),
-    settings = defaultSettings ++ SbtStartScript.startScriptForClassesSettings ++ Seq(
+    settings = defaultSettings ++ packageArchetype.java_application ++ Seq(
       mainClass in Compile := Some("org.apache.camel.spring.Main"),
       libraryDependencies ++= libDependencies
     )
